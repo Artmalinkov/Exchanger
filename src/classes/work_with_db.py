@@ -1,11 +1,16 @@
 import pyodbc
+from src.classes.config import *
+
 
 def get_cursor(db_name):
     '''
     Возвращает объект курсора для дальнейшего взаимодействия с базой
     :param db_name: имя конкретной базы данных
-    :return:
+    :return: corsor
     '''
+    # Загрузка файла конйигурации
+    config = load_config()
+
     conn_str = (
         f"DRIVER={config['database_for_analytics']['DRIVER']};"  # Драйвер MySQL  
         f"SERVER={config['database_for_analytics']['SERVER']};"  # Имя сервера  
@@ -18,4 +23,3 @@ def get_cursor(db_name):
     conn = pyodbc.connect(conn_str)
     cursor = conn.cursor()
     return cursor
-
