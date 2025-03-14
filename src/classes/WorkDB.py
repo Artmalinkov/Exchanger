@@ -33,12 +33,17 @@ class WorkDB():
         except pyodbc.Error as e:
             print(f"Ошибка при выполнении запроса: {e}")
 
-        finally:
-            # Закрытие соединения
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
+    def get_bd_names():
+        '''
+        Возвращает список имеющихся баз данных
+        :return: db_names
+        '''
+        cursor_for_analytics = get_cursor('for_analytics')
+        table_db_names = cursor_for_analytics.execute('SELECT * FROM for_analytics.exchanges;')
+        db_names = []
+        for db in table_db_names.fetchall():
+            db_names.append(db[0])
+        return db_names
 
     cursor_for_analytics = get_cursor('for_analytics')
     cursor_cerber = get_cursor('cerber')

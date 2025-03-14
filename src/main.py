@@ -2,7 +2,11 @@
 Основной функционал проекта согласно README
 '''
 import pandas as pd
+import pyodbc
 from src.classes.WorkDB import *
+
+# Настройка pandas
+pd.set_option('display.max_colwidth', None)
 
 def get_start():
     '''

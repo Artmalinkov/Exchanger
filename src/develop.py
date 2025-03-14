@@ -1,8 +1,48 @@
 import pandas as pd
 from src.classes.WorkDB import *
 from src.main import *
-# TODO настройка типовых запросов
+# TODO переделать функцию получения cursors
 
+
+
+
+      db_names = list(cursor_for_analytics.execute('SELECT * FROM for_analytics.exchanges;'))
+      db_names
+
+
+
+
+
+df = pd.DataFrame(table)
+df
+
+
+
+table.fetchall()
+
+
+
+# TODO настройка типовых запросов
+    # TODO Настройка запросов по криптокошельку
+
+sql_string = '''select 'lemonchik', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
+from  lemonchik.arah_archive_exchange_bids
+where account_give in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
+      account_get in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
+      to_account  in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
+      from_account in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1)
+      ;'''
+
+
+table_tmp = cursor_lemonchik.execute(sql_string)
+df = pd.DataFrame(table_tmp)
+df
+
+
+
+
+# Объединение двух df
+df = pd.concat([df, df2], ignore_index=True)
 
 # Проверка криптокошельков по всем БД
 
@@ -74,7 +114,12 @@ cursor_lemonchik.execute(sql_str)
 
 
 
-sql_string = '''
+
+
+
+
+
+
 select 'tochka', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
 from  tochka.tnp8_archive_exchange_bids
 where account_give in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
@@ -95,13 +140,7 @@ where account_give in (select crypto_wallet from for_analytics.crypto_wallet whe
 UNION
 '''
 sql_str = '''
-select 'lemonchik', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
-from  lemonchik.arah_archive_exchange_bids
-where account_give in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
-      account_get in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
-      to_account  in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
-      from_account in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1)
-      ;'''
+
 
 
 
