@@ -14,7 +14,7 @@ class WorkDB():
         :param db_name: имя конкретной базы данных
         :return: corsor
         '''
-    # Загрузка файла конйигурации
+        # Загрузка файла конйигурации
         config = load_config()
 
         conn_str = (
@@ -24,11 +24,21 @@ class WorkDB():
             f"UID={config['database_for_analytics']['UID']};"  # Имя пользователя  
             f"PWD={config['database_for_analytics']['PWD']};"  # Пароль
         )
+        try:
+            pyodbc.connect(conn_str)
+            conn = pyodbc.connect(conn_str)
+            cursor = conn.cursor()
+            return cursor
 
-        pyodbc.connect(conn_str)
-        conn = pyodbc.connect(conn_str)
-        cursor = conn.cursor()
-        return cursor
+        except pyodbc.Error as e:
+            print(f"Ошибка при выполнении запроса: {e}")
+
+        finally:
+            # Закрытие соединения
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
 
     cursor_for_analytics = get_cursor('for_analytics')
     cursor_cerber = get_cursor('cerber')
