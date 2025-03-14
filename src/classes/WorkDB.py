@@ -45,8 +45,13 @@ class WorkDB():
             db_names.append(db[0])
         return db_names
 
-    cursor_for_analytics = get_cursor('for_analytics')
-    cursor_cerber = get_cursor('cerber')
-    cursor_lemonchik = get_cursor('lemonchik')
-    cursor_tochka = get_cursor('tochka')
-    cursor_tmp = get_cursor('tmp')
+    def get_all_cursors():
+        '''
+        Метод возвращает словарь курсоров всех имеющихся БД
+        :return: dict_db_cursors
+        '''
+        bd_names = WorkDB.get_bd_names()
+        dict_db_cursors = {}
+        for bd_name in bd_names:
+            dict_db_cursors[bd_name] = get_cursor(bd_name)
+        return dict_db_cursors

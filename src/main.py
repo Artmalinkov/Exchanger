@@ -5,26 +5,21 @@ import pandas as pd
 import pyodbc
 from src.classes.WorkDB import *
 
-# Настройка pandas
-pd.set_option('display.max_colwidth', None)
-
-def get_start():
+def config_pandas():
     '''
-    Начало работы, подключение.
-    :return: об
+    Настройка конфигурации pandas
+    :return: None
     '''
-
-    cursor_for_analytics = WorkDB.get_cursor('for_analytics')
-    cursor_cerber = WorkDB.get_cursor('cerber')
-    cursor_lemonchik = WorkDB.get_cursor('lemonchik')
-    cursor_tochka = WorkDB.get_cursor('tochka')
-    cursor_tmp = WorkDB.get_cursor('tmp')
-    return cursor_for_analytics, cursor_cerber, cursor_lemonchik, cursor_tochka, cursor_tmp
+    # Настройка ширины вывода строки
+    pd.set_option('display.max_colwidth', None)
 
 
 def main():
+    # Настройка конфигурации pandas
+    config_pandas()
+
     # Получение объектов курсоров
-    cursor_for_analytics, cursor_cerber, cursor_lemonchik, cursor_tochka, cursor_tmp = get_start()
+    dict_db_cursors = WorkDB.get_all_cursors()
 
 
 if __name__ == '__main__':

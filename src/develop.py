@@ -3,22 +3,7 @@ from src.classes.WorkDB import *
 from src.main import *
 # TODO переделать функцию получения cursors
 
-
-
-
-      db_names = list(cursor_for_analytics.execute('SELECT * FROM for_analytics.exchanges;'))
-      db_names
-
-
-
-
-
-df = pd.DataFrame(table)
-df
-
-
-
-table.fetchall()
+dict_db_cursors = WorkDB.get_all_cursors()
 
 
 
