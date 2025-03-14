@@ -1,11 +1,8 @@
 import pandas as pd
+import pyodbc
+
 from src.classes.WorkDB import *
 from src.main import *
-# TODO переделать функцию получения cursors
-
-dict_db_cursors = WorkDB.get_all_cursors()
-
-
 
 # TODO настройка типовых запросов
     # TODO Настройка запросов по криптокошельку
@@ -18,9 +15,27 @@ where account_give in (select crypto_wallet from for_analytics.crypto_wallet whe
       from_account in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1)
       ;'''
 
+dict_db_cursors = WorkDB.get_all_cursors()
 
-table_tmp = cursor_lemonchik.execute(sql_string)
-df = pd.DataFrame(table_tmp)
+try:
+      table_tmp = dict_db_cursors['lemonchik'].execute(sql_string)
+      rows = table_tmp.fetchall()
+except pyodbc.Error as e:
+      print(f"Ошибка при выполнении запроса: {e}")
+
+
+rows
+
+columns = [column[0] for column in dict_db_cursors['lemonchik'].description]
+columns
+
+
+df = pd.DataFrame.from_records(rows, columns=columns)
+df
+
+
+table_tmp
+df = pd.DataFrame(rows)
 df
 
 

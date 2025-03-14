@@ -12,7 +12,10 @@ def config_pandas():
     '''
     # Настройка ширины вывода строки
     pd.set_option('display.max_colwidth', None)
-
+    # Настройка ширины вывода заголовков
+    pd.set_option('display.max_columns', None)
+    # Настройка ширины вывода строк
+    pd.set_option('display.width', 1000)
 
 def main():
     # Настройка конфигурации pandas
