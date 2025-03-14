@@ -1,14 +1,29 @@
 import pandas as pd
-from src.classes.work_with_db import *
+from src.classes.WorkDB import *
+
+# TODO настройка подключение к нужным базам
 
 
-cursor_for_analytics = get_cursor('for_analytics')
 
-tables = cursor_for_analytics.tables()
 
-df = pd.DataFrame(tables)
 
+
+schemas = cursor_for_analytics.execute("SHOW DATABASES")
+schemas
+df = pd.DataFrame(schemas)
 df
+
+schemas.fetchone()
+
+df = pd.DataFrame(schemas)
+df[0]
+
+schemas.fetchall()
+schemas.fetchall()
+
+df.iat[0, 0]
+
+
 
 sql_string = '''
 select 'tochka', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
