@@ -8,7 +8,6 @@ class WorkDB():
     '''
 
     def get_cursor(db_name):
-
         '''
         Подключается к базе, возвращает объект курсора для дальнейшего взаимодействия с базой
         :param db_name: имя конкретной базы данных
@@ -25,7 +24,6 @@ class WorkDB():
             f"PWD={config['database_for_analytics']['PWD']};"  # Пароль
         )
         try:
-            pyodbc.connect(conn_str)
             conn = pyodbc.connect(conn_str)
             cursor = conn.cursor()
             return cursor
@@ -38,7 +36,7 @@ class WorkDB():
         Возвращает список имеющихся баз данных
         :return: db_names
         '''
-        cursor_for_analytics = get_cursor('for_analytics')
+        cursor_for_analytics = WorkDB.get_cursor('for_analytics')
         table_db_names = cursor_for_analytics.execute('SELECT * FROM for_analytics.exchanges;')
         db_names = []
         for db in table_db_names.fetchall():
@@ -53,5 +51,5 @@ class WorkDB():
         bd_names = WorkDB.get_bd_names()
         dict_db_cursors = {}
         for bd_name in bd_names:
-            dict_db_cursors[bd_name] = get_cursor(bd_name)
+            dict_db_cursors[bd_name] = WorkDB.get_cursor(bd_name)
         return dict_db_cursors
