@@ -3,6 +3,7 @@
 '''
 from src.classes.WorkDB import *
 
+
 class CheckCrypto():
     '''
     Класс по проверке криптокошельков по БД
