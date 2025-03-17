@@ -36,3 +36,11 @@ class CheckCrypto():
 
         except pyodbc.Error as e:
             print(f"Ошибка при выполнении запроса: {e}")
+
+    def check_tochka(self):
+        pass
+
+    def chech_cerber(self):
+        pass
+
+
