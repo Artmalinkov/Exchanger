@@ -12,6 +12,8 @@ class CheckCrypto():
     def __init__(self):
         self.dict_db_cursors = WorkDB.get_all_cursors()
         self.df = pd.DataFrame()
+        self.columns = ['db_name', 'create_date', 'edit_date', 'account_give', 'account_get', 'user_email', 'exsum',
+                        'to_account', 'from_account', 'user_ip']
         self.sql_crypto_lemonchik = '''
             select DATABASE() as db_name, create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
             from  lemonchik.arah_archive_exchange_bids
@@ -33,8 +35,7 @@ class CheckCrypto():
                 account_get in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
                 to_account  in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
                 from_account in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1);'''
-        self.columns = ['db_name', 'create_date', 'edit_date', 'account_give', 'account_get', 'user_email', 'exsum',
-                        'to_account', 'from_account', 'user_ip']
+
 
     def check_universal(self, db_name, sql_string):
         '''
