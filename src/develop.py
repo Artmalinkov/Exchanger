@@ -5,6 +5,6 @@ from src.classes.checking.check import *
 
 
 
-obj = EmailUsers()
+obj = EmailTransactions()
 obj.get_check_all_db()
 

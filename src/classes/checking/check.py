@@ -145,3 +145,27 @@ class EmailUsers(Check):
                          from  tochka.tnp8_users
                          where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);'''
         }
+
+
+class EmailTransactions(Check):
+    '''
+    Класс по проверке email по транзакциям по БД
+    '''
+
+    def __init__(self):
+        # Вызов __init__ родительского класса
+        super().__init__()
+        self.columns = ['db_name', 'create_date', 'edit_date', 'account_give', 'account_get', 'user_email', 'exsum',
+                        'to_account', 'from_account', 'user_ip']
+        self.dict_sql_string = {
+            'lemonchik': '''select 'lemonchik', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
+                            from  lemonchik.arah_archive_exchange_bids
+                            where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);''',
+            'cerber': '''select 'cerber', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
+                            from  cerber.1iyp_archive_exchange_bids
+                            where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);''',
+            'tochka': '''select 'tochka', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
+                            from  tochka.tnp8_archive_exchange_bids
+                            where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);'''
+        }
+
