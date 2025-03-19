@@ -169,3 +169,24 @@ class EmailTransactions(Check):
                             where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);'''
         }
 
+
+class IPUsers(Check):
+    '''
+    Класс по проверке IP по юзерам по БД
+    '''
+
+    def __init__(self):
+        # Вызов __init__ родительского класса
+        super().__init__()
+        self.columns = ['db_name', 'user_login', 'user_email', 'display_name', 'user_browser', 'user_ip']
+        self.dict_sql_string = {
+            'lemonchik': '''select 'lemonchik', user_login, user_email, display_name, user_browser, user_ip
+                            from  lemonchik.arah_users
+                            where user_ip in (select IP_address from for_analytics.ip where need_check = 1);''',
+            'cerber': '''select 'cerber', user_login, user_email, display_name, user_browser, user_ip
+                         from  cerber.1iyp_users
+                         where user_ip in (select IP_address from for_analytics.ip where need_check = 1);''',
+            'tochka': '''select 'tochka', user_login, user_email, display_name, user_browser, user_ip
+                         from  tochka.tnp8_users
+                         where user_ip in (select IP_address from for_analytics.ip where need_check = 1);'''
+        }
