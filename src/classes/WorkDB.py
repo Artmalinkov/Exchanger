@@ -52,4 +52,5 @@ class WorkDB():
         dict_db_cursors = {}
         for bd_name in bd_names:
             dict_db_cursors[bd_name] = WorkDB.get_cursor(bd_name)
+        print('Соединение с БД установлено')
         return dict_db_cursors
