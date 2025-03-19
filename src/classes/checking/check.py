@@ -45,7 +45,6 @@ class Check():
             # Добавляем полученную информацию к изначальному df
             self.df = pd.concat([self.df, tmp_df], ignore_index=True)
 
-    # TODO Общий метод по проверке реквизита по всем БД
     def get_check_all_db(self):
         '''
         Универсальный метод по проверке реквизита по всем БД
@@ -124,3 +123,25 @@ class CheckCrypto(Check):
                                        to_account  in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1) or
                                        from_account in (select crypto_wallet from for_analytics.crypto_wallet where need_to_check = 1);'''
                                 }
+
+
+class EmailUsers(Check):
+    '''
+    Класс по проверке email по юзерам по БД
+    '''
+
+    def __init__(self):
+        # Вызов __init__ родительского класса
+        super().__init__()
+        self.columns = ['db_name', 'user_login', 'user_email', 'display_name', 'user_browser', 'user_ip']
+        self.dict_sql_string = {
+            'lemonchik': '''select 'lemonchik', user_login, user_email, display_name, user_browser, user_ip
+                            from  lemonchik.arah_users
+                            where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);''',
+            'cerber': '''select 'cerber', user_login, user_email, display_name, user_browser, user_ip
+                         from  cerber.1iyp_users
+                         where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);''',
+            'tochka': '''select 'tochka', user_login, user_email, display_name, user_browser, user_ip
+                         from  tochka.tnp8_users
+                         where user_email in (select e_mail from for_analytics.e_mail where need_check = 1);'''
+        }
