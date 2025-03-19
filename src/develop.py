@@ -4,7 +4,5 @@ from src.classes.checking.check import *
 
 
 
-
-obj = IPTransactions()
+obj = Phone()
 obj.get_check_all_db()
-

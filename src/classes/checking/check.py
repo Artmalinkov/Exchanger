@@ -1,5 +1,5 @@
 '''
-Проверка банковских карт по всем БД
+Функционал по проверке реквизитов по БД
 '''
 import pandas as pd
 
@@ -212,4 +212,27 @@ class IPTransactions(Check):
             'tochka': '''select 'tochka', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
                          from  tochka.tnp8_archive_exchange_bids
                          where user_ip in (select IP_address from for_analytics.ip where need_check = 1);'''
+        }
+
+
+class Phone(Check):
+    '''
+    Класс по проверке номеров телефонов по БД
+    '''
+
+    def __init__(self):
+        # Вызов __init__ родительского класса
+        super().__init__()
+        self.columns = ['db_name', 'create_date', 'edit_date', 'account_give', 'account_get', 'user_email', 'exsum',
+                        'to_account', 'from_account', 'user_ip']
+        self.dict_sql_string = {
+            'lemonchik': '''select 'lemonchik', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
+                            from  lemonchik.arah_archive_exchange_bids
+                            where account_get in (select phone_number from for_analytics.phone_number where need_check = 1);''',
+            'cerber': '''select 'cerber', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
+                         from  cerber.1iyp_archive_exchange_bids
+                         where account_get in (select phone_number from for_analytics.phone_number where need_check = 1);''',
+            'tochka': '''select 'tochka', create_date, edit_date, account_give, account_get, user_email, exsum, to_account, from_account, user_ip
+                         from  tochka.tnp8_archive_exchange_bids
+                         where account_get in (select phone_number from for_analytics.phone_number where need_check = 1);'''
         }
