@@ -1,33 +1,24 @@
 import sys
 
-from PySide6.QtWidgets import (
-    QApplication,
-    QLabel,
-    QLineEdit,
-    QMainWindow,
-    QVBoxLayout,
-    QWidget,
-)
+from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.label = QLabel("Click in this window")
+        self.setCentralWidget(self.label)
 
-        self.setWindowTitle("My App")
+    def mouseMoveEvent(self, e):
+        self.label.setText("mouseMoveEvent")
 
-        self.label = QLabel()
+    def mousePressEvent(self, e):
+        self.label.setText("mousePressEvent")
 
-        self.input = QLineEdit()
-        self.input.textChanged.connect(self.label.setText)
+    def mouseReleaseEvent(self, e):
+        self.label.setText("mouseReleaseEvent")
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.input)
-        layout.addWidget(self.label)
-
-        container = QWidget()
-        container.setLayout(layout)
-
-        self.setCentralWidget(container)
+    def mouseDoubleClickEvent(self, e):
+        self.label.setText("mouseDoubleClickEvent")
 
 app = QApplication(sys.argv)
 
