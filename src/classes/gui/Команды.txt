@@ -1,0 +1,7 @@
+# Конвертация из .ui в .py
+pyuic6 input_file.ui -o output_file.py
+
+# Запуск QT Designer
+pyside6-designer
+
+
