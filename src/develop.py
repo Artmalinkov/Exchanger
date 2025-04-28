@@ -1,19 +1,7 @@
 import sys
 
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (
-    QApplication,
-    QCheckBox,
-    QComboBox,
-    QDial,
-    QDoubleSpinBox,
-    QLabel,
-    QLineEdit,
-    QListWidget,
-    QMainWindow,
-    QSlider,
-    QSpinBox,
-)
+from PySide6.QtWidgets import QApplication, QDialog, QMainWindow, QPushButton
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -21,20 +9,17 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        listwidget = QListWidget()
-        listwidget.addItems(["One", "Two", "Three"])
+        button = QPushButton("Press me for a dialog!")
+        button.clicked.connect(self.button_clicked)
+        self.setCentralWidget(button)
 
-        # In QListWidget there are two separate signals for the item, and the str
-        listwidget.currentItemChanged.connect(self.index_changed)
-        listwidget.currentTextChanged.connect(self.text_changed)
+    def button_clicked(self, s):
+        print("click", s)
 
-        self.setCentralWidget(listwidget)
+        dlg = QDialog(self)
+        dlg.setWindowTitle("HELLO!")
+        dlg.exec()
 
-    def index_changed(self, index):  # Not an index, index is a QListWidgetItem
-        print(index.text())
-
-    def text_changed(self, text):  # text is a str
-        print(text)
 
 app = QApplication(sys.argv)
 window = MainWindow()
