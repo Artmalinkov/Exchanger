@@ -21,15 +21,18 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        label = QLabel("Hello")
-        font = label.font()
-        font.setPointSize(30)
-        label.setFont(font)
-        label.setAlignment(
-            Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter
-        )
+        checkbox = QCheckBox('This is checkbox')
+        checkbox.setCheckState(Qt.CheckState.Checked)
 
-        self.setCentralWidget(label)
+        # For tristate: widget.setCheckState(Qt.PartiallyChecked)
+        # Or: widget.setTriState(True)
+        checkbox.stateChanged.connect(self.show_state)
+
+        self.setCentralWidget(checkbox)
+
+    def show_state(self, state):
+        print(state == Qt.CheckState.Checked.value)
+        print(state)
 
 app = QApplication(sys.argv)
 window = MainWindow()
