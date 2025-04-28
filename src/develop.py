@@ -21,18 +21,22 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        checkbox = QCheckBox('This is checkbox')
-        checkbox.setCheckState(Qt.CheckState.Checked)
+        combobox = QComboBox()
+        combobox.addItems(["One", "Two", "Three"])
 
-        # For tristate: widget.setCheckState(Qt.PartiallyChecked)
-        # Or: widget.setTriState(True)
-        checkbox.stateChanged.connect(self.show_state)
+        # The default signal from currentIndexChanged sends the index
+        combobox.currentIndexChanged.connect(self.index_changed)
 
-        self.setCentralWidget(checkbox)
+        # The same signal can send a text string
+        combobox.currentTextChanged.connect(self.text_changed)
 
-    def show_state(self, state):
-        print(state == Qt.CheckState.Checked.value)
-        print(state)
+        self.setCentralWidget(combobox)
+
+    def index_changed(self, index):  # index is an int starting from 0
+        print(index)
+
+    def text_changed(self, text):  # text is a str
+        print(text)
 
 app = QApplication(sys.argv)
 window = MainWindow()
