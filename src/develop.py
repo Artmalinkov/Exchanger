@@ -20,6 +20,7 @@ class MainWindow(QMainWindow):
 
         # Also change the window title.
         self.setWindowTitle("My Oneshot App")
+        self.setWindowTitle("A new window title")
 
 app = QApplication(sys.argv)
 
