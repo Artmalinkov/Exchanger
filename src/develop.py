@@ -21,19 +21,17 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("My App")
 
-        combobox = QComboBox()
-        combobox.addItems(["One", "Two", "Three"])
+        listwidget = QListWidget()
+        listwidget.addItems(["One", "Two", "Three"])
 
-        # The default signal from currentIndexChanged sends the index
-        combobox.currentIndexChanged.connect(self.index_changed)
+        # In QListWidget there are two separate signals for the item, and the str
+        listwidget.currentItemChanged.connect(self.index_changed)
+        listwidget.currentTextChanged.connect(self.text_changed)
 
-        # The same signal can send a text string
-        combobox.currentTextChanged.connect(self.text_changed)
+        self.setCentralWidget(listwidget)
 
-        self.setCentralWidget(combobox)
-
-    def index_changed(self, index):  # index is an int starting from 0
-        print(index)
+    def index_changed(self, index):  # Not an index, index is a QListWidgetItem
+        print(index.text())
 
     def text_changed(self, text):  # text is a str
         print(text)
